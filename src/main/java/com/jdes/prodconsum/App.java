@@ -24,10 +24,7 @@ public class App
 	// volatile prevents memory consistency errors
 	// the queue in this case will always be read from the main memory
 	private static volatile BlockingQueue<AtomicBurger> buffer = new ArrayBlockingQueue<AtomicBurger>(5);
-	private static volatile AtomicBurger burger1 = new AtomicBurger(1);
-	private static volatile AtomicBurger burger2 = new AtomicBurger(2);
-	private static volatile AtomicBurger burger3 = new AtomicBurger(3);
-	private static volatile AtomicBurger burger4 = new AtomicBurger(4);
+
 	private static volatile List<AtomicBurger> orders = new ArrayList<AtomicBurger>();
 	private static volatile List<AtomicBurger> cookedBurgers = new ArrayList<AtomicBurger>();
 	private static volatile Producer producer = new Producer();
@@ -38,7 +35,10 @@ public class App
     {
     	System.out.println("Inside : " + Thread.currentThread().getName());
     	// Sets up a blocking queue of max capacity 5! :D 
-    	
+    	AtomicBurger burger1 = new AtomicBurger(1);
+    	AtomicBurger burger2 = new AtomicBurger(2);
+    	AtomicBurger burger3 = new AtomicBurger(3);
+    	AtomicBurger burger4 = new AtomicBurger(4);
     	
     	orders.add(burger1);
     	orders.add(burger2);
