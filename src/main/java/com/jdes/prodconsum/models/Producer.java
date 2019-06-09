@@ -29,7 +29,7 @@ public class Producer {
 			} catch (InterruptedException e) {
 				System.out.println("Error putting burger into queue: "+e);
 			}
-			System.out.println("burger["+burger.burgerId+"] has been placed in the buffer");
+			System.out.println("Burger["+burger.burgerId+"] has been placed in the buffer");
 		} else if (isBurgerCooked == false) {
 			System.out.println("Waiting for burger["+burger.burgerId+"] to cook");
 		}
