@@ -7,7 +7,7 @@ import java.util.concurrent.BlockingQueue;
 public class Producer {
 	
 	
-	public synchronized void cookBurger (AtomicBurger burger) {
+	public void cookBurger (AtomicBurger burger) {
 		
 		if (burger.getCooked() == false) {
 		System.out.println("Burger["+burger.burgerId+"] is cooking...");
@@ -17,7 +17,7 @@ public class Producer {
 		}
 	}
 	
-	public synchronized void placeBurgerInBuffer(AtomicBurger burger, BlockingQueue<AtomicBurger> buffer) {
+	public void placeBurgerInBuffer(AtomicBurger burger, BlockingQueue<AtomicBurger> buffer) {
 		
 		boolean isBurgerCooked = burger.getCooked();
 		// ahh I see why buffer.contains(burger) != true is flawed!
