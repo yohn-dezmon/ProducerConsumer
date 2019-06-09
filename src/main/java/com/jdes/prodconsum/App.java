@@ -28,7 +28,8 @@ public class App
     	// the lines similar to the one below are useful to see which thread is 
     	// being used by each task in real time.
 //    	System.out.println("Inside : " + Thread.currentThread().getName());
-    	// Sets up a blocking queue of max capacity 5! :D 
+    	
+    	 
     	List<AtomicBurger> orders = new ArrayList<AtomicBurger>();
     	List<AtomicBurger> cookedBurgers = new ArrayList<AtomicBurger>();
     	
@@ -126,8 +127,7 @@ public class App
          executorService.scheduleAtFixedRate(task3, 0,1, TimeUnit.SECONDS);
          
          executorService.scheduleAtFixedRate(task4, 0,1, TimeUnit.SECONDS);
-         // I set the period between runs for this task as longer since it is just a 
-         // check to see if the burgers were delivered
+         
          executorService.scheduleAtFixedRate(task5, 0, 1, TimeUnit.SECONDS);
         
          // This waits one minute to shut down the executor service! 

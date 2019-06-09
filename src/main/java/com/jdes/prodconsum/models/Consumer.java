@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public class Consumer {
-	// since the Buffer is a shared resource, I'm going to make this a synchronized method
+	
 	public void getBurgerFromBuffer(BlockingQueue<AtomicBurger> buffer, List<AtomicBurger> cookedBurgers) {
 		
 		 
@@ -22,12 +22,11 @@ public class Consumer {
 			
 		}
 		
-	// the burger is also a shared resource, therefore I will make this synchronized as well
+	
 	public void deliverBurger(AtomicBurger burger) {
 		if (burger.getDelivered() == false) {
 		System.out.println("Delivering burger["+burger.burgerId+"]...");
-		// I'm going to run this in a thread and either do a join
-		// or sleep to give it a time...
+		
 		burger.setDelivered();
 		}
 	}
