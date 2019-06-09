@@ -9,11 +9,11 @@ import java.util.List;
 
 public class Consumer {
 	// since the Buffer is a shared resource, I'm going to make this a synchronized method
-	public synchronized void getBurgerFromBuffer(BlockingQueue<Burger> buffer, List<Burger> cookedBurgers) {
+	public synchronized void getBurgerFromBuffer(BlockingQueue<AtomicBurger> buffer, List<AtomicBurger> cookedBurgers) {
 		
 		 
 			// .take() will wait until the list is not empty unless otherwise interrupted.
-			try { Burger readyBurger = buffer.take();
+			try { AtomicBurger readyBurger = buffer.take();
 			System.out.println("Taking burger["+readyBurger.burgerId+"] from the buffer");
 				cookedBurgers.add(readyBurger);
 			} catch (InterruptedException e) {
@@ -23,12 +23,12 @@ public class Consumer {
 		}
 		
 	// the burger is also a shared resource, therefore I will make this synchronized as well
-	public synchronized void deliverBurger(Burger burger) {
+	public synchronized void deliverBurger(AtomicBurger burger) {
 		if (burger.getDelivered() == false) {
 		System.out.println("Delivering burger["+burger.burgerId+"]...");
 		// I'm going to run this in a thread and either do a join
 		// or sleep to give it a time...
-		burger.setDelivered(true);
+		burger.setDelivered();
 		}
 	}
 

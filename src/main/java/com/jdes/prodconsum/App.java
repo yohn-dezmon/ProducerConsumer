@@ -23,13 +23,13 @@ public class App
 {
 	// volatile prevents memory consistency errors
 	// the queue in this case will always be read from the main memory
-	private static volatile BlockingQueue<Burger> buffer = new ArrayBlockingQueue<Burger>(5);
-	private static volatile Burger burger1 = new Burger(1);
-	private static volatile Burger burger2 = new Burger(2);
-	private static volatile Burger burger3 = new Burger(3);
-	private static volatile Burger burger4 = new Burger(4);
-	private static volatile List<Burger> orders = new ArrayList<Burger>();
-	private static volatile List<Burger> cookedBurgers = new ArrayList<Burger>();
+	private static volatile BlockingQueue<AtomicBurger> buffer = new ArrayBlockingQueue<AtomicBurger>(5);
+	private static volatile AtomicBurger burger1 = new AtomicBurger(1);
+	private static volatile AtomicBurger burger2 = new AtomicBurger(2);
+	private static volatile AtomicBurger burger3 = new AtomicBurger(3);
+	private static volatile AtomicBurger burger4 = new AtomicBurger(4);
+	private static volatile List<AtomicBurger> orders = new ArrayList<AtomicBurger>();
+	private static volatile List<AtomicBurger> cookedBurgers = new ArrayList<AtomicBurger>();
 	private static volatile Producer producer = new Producer();
 	private static volatile Consumer consumer = new Consumer();
 	
@@ -46,9 +46,9 @@ public class App
     	orders.add(burger4);
     	
     	
-    	List<Burger> synlist = Collections.synchronizedList(orders);
+    	List<AtomicBurger> synlist = Collections.synchronizedList(orders);
     	
-    	List<Burger> cookedSynlist = Collections.synchronizedList(cookedBurgers);
+    	List<AtomicBurger> cookedSynlist = Collections.synchronizedList(cookedBurgers);
     
     	
 //        System.out.println("BurgerID: "+ burger1.burgerId);
@@ -60,7 +60,7 @@ public class App
         
         Runnable task1 = () -> {
         	System.out.println("Task 1 Inside : " + Thread.currentThread().getName());
-        	for (Burger b:synlist) {
+        	for (AtomicBurger b:synlist) {
         		producer.cookBurger(b);
         		try { Thread.sleep(3000); 
         		} catch (InterruptedException ex) {
@@ -73,7 +73,7 @@ public class App
         
         Runnable task2 = () -> {
         	System.out.println("Task 2 Inside : " + Thread.currentThread().getName());
-        	for (Burger b:synlist) {
+        	for (AtomicBurger b:synlist) {
         		producer.placeBurgerInBuffer(b, buffer);
         		try { Thread.sleep(3000); 
         		} catch (InterruptedException ex) {
@@ -84,14 +84,14 @@ public class App
         
         Runnable task3 = () -> {
         	System.out.println("Task 3 Inside : " + Thread.currentThread().getName());
-        	for (Burger b: buffer) {
+        	for (AtomicBurger b: buffer) {
         	consumer.getBurgerFromBuffer(buffer, cookedSynlist); 
         	}
         };
         
         Runnable task4 = () -> {
         	System.out.println("Task 4 Inside : " + Thread.currentThread().getName());
-        	for (Burger b: cookedSynlist) {
+        	for (AtomicBurger b: cookedSynlist) {
         	consumer.deliverBurger(b);
         	try { Thread.sleep(3000); 
     		} catch (InterruptedException ex) {
@@ -104,7 +104,7 @@ public class App
          
          Runnable task5 = () -> {
         	 System.out.println("Task 5 Inside : " + Thread.currentThread().getName());
-         for (Burger b:synlist) {
+         for (AtomicBurger b:synlist) {
         	 if ((b.getCooked() == true) && (b.getDelivered() == true)) {
         		 System.out.println("Burger["+b.burgerId+"] has been delivered!");
         	 }
