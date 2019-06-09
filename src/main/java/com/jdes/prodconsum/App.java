@@ -1,13 +1,10 @@
 package com.jdes.prodconsum;
 
-import java.util.Queue;
-import java.util.LinkedList;
 import com.jdes.prodconsum.models.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import java.util.List;
@@ -67,7 +64,7 @@ public class App
 //        	System.out.println("Task 1 Inside : " + Thread.currentThread().getName());
         	for (AtomicBurger b:synlist) {
         		producer.cookBurger(b);
-        		try { Thread.sleep(3000); 
+        		try { Thread.sleep(1000); 
         		} catch (InterruptedException ex) {
         			throw new IllegalStateException(ex);
         		}
@@ -98,7 +95,7 @@ public class App
 //        	System.out.println("Task 4 Inside : " + Thread.currentThread().getName());
         	for (AtomicBurger b: cookedSynlist) {
         	consumer.deliverBurger(b);
-        	try { Thread.sleep(3000); 
+        	try { Thread.sleep(1000); 
     		} catch (InterruptedException ex) {
     			throw new IllegalStateException(ex);
     		}
@@ -109,10 +106,11 @@ public class App
          
          Runnable task5 = () -> {
 //        	 System.out.println("Task 5 Inside : " + Thread.currentThread().getName());
-         for (AtomicBurger b:synlist) {
+         for (AtomicBurger b:cookedSynlist) {
         	 if ((b.getCooked() == true) && (b.getDelivered() == true)) {
         		 System.out.println("Burger["+b.burgerId+"] has been delivered!");
         	 }
+        	 
          }
          };
          
@@ -123,14 +121,14 @@ public class App
        // 0 is the initial delay, I only wanted to schedule this task once.
          executorService.schedule(task1, 0, TimeUnit.MINUTES);
       // 0 is initial delay, 4 means every four seconds
-         executorService.scheduleAtFixedRate(task2, 0,4, TimeUnit.SECONDS);
+         executorService.scheduleAtFixedRate(task2, 0,1, TimeUnit.SECONDS);
         
-         executorService.scheduleAtFixedRate(task3, 0,2, TimeUnit.SECONDS);
+         executorService.scheduleAtFixedRate(task3, 0,1, TimeUnit.SECONDS);
          
-         executorService.scheduleAtFixedRate(task4, 0,8, TimeUnit.SECONDS);
+         executorService.scheduleAtFixedRate(task4, 0,1, TimeUnit.SECONDS);
          // I set the period between runs for this task as longer since it is just a 
          // check to see if the burgers were delivered
-         executorService.scheduleAtFixedRate(task5, 0, 10, TimeUnit.SECONDS);
+         executorService.scheduleAtFixedRate(task5, 0, 1, TimeUnit.SECONDS);
         
          // This waits one minute to shut down the executor service! 
          executorService.awaitTermination(1, TimeUnit.MINUTES);
