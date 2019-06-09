@@ -28,7 +28,9 @@ public class App
 	
     public static void main( String[] args ) throws InterruptedException
     {
-    	System.out.println("Inside : " + Thread.currentThread().getName());
+    	// the lines similar to the one below are useful to see which thread is 
+    	// being used by each task in real time.
+//    	System.out.println("Inside : " + Thread.currentThread().getName());
     	// Sets up a blocking queue of max capacity 5! :D 
     	List<AtomicBurger> orders = new ArrayList<AtomicBurger>();
     	List<AtomicBurger> cookedBurgers = new ArrayList<AtomicBurger>();
@@ -54,7 +56,6 @@ public class App
     	
     	
     	List<AtomicBurger> synlist = Collections.synchronizedList(orders);
-    	
     	List<AtomicBurger> cookedSynlist = Collections.synchronizedList(cookedBurgers);
      
         
@@ -62,8 +63,7 @@ public class App
         
         // Anonymous Runnable defined using a lambda 
         Runnable task1 = () -> {
-        	// the lines similar to the one below are useful to see which thread is 
-        	// being used by each task.
+        	
 //        	System.out.println("Task 1 Inside : " + Thread.currentThread().getName());
         	for (AtomicBurger b:synlist) {
         		producer.cookBurger(b);
@@ -120,18 +120,16 @@ public class App
          
         
         	 
-       // I really only want this to run once but this will do for now...
+       // 0 is the initial delay, I only wanted to schedule this task once.
          executorService.schedule(task1, 0, TimeUnit.MINUTES);
-      // 0 is initial delay, 2 means every two seconds.
-         // I believe the initial delay here is set to 4 seconds...
+      // 0 is initial delay, 4 means every four seconds
          executorService.scheduleAtFixedRate(task2, 0,4, TimeUnit.SECONDS);
         
-         
          executorService.scheduleAtFixedRate(task3, 0,2, TimeUnit.SECONDS);
          
          executorService.scheduleAtFixedRate(task4, 0,8, TimeUnit.SECONDS);
-         
-         
+         // I set the period between runs for this task as longer since it is just a 
+         // check to see if the burgers were delivered
          executorService.scheduleAtFixedRate(task5, 0, 10, TimeUnit.SECONDS);
         
          // This waits one minute to shut down the executor service! 
