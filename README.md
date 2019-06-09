@@ -1,6 +1,6 @@
 # Producer Consumer Problem (Java)
 
-# # # This is my implementation of the Producer Consumer Problem. 
+### This is my implementation of the [Producer Consumer Problem](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem). 
 
 It could be made more efficient by introducing semaphores, but to solve the issue at hand
 I used scheduled threads instead.
@@ -10,13 +10,13 @@ The buffer has a maximum size of 5.
 The Consumer waits until the buffer has at least 1 burger, then takes the burger and 
 delivers it to a customer. 
 
-Once the burger has been cooked and delivered, "Burger[i] has been delivered!" will 
-appear on the console.
+Task 5 periodically checks if the burger has been cooked and delivered,
+and if it has, "Burger[i] has been delivered!" will appear on the console.
 
 --
 
 I decided to use two threads and 5 tasks to complete the problem. 
-# # # The tasks are as follows:
+### The tasks are as follows:
 
 1. Cook the burger 
 2. Place the burger into the buffer (queue)
@@ -26,8 +26,8 @@ I decided to use two threads and 5 tasks to complete the problem.
 
 -- 
 
-# # # I synchronized the shared variables by...
-1. using the volatile keyword when defining the buffer
-2. Making the buffer a BlockingQueue
-3. Using AtomicBooleans for the burger states (cooked/delivered/inBuffer)
-4. Using SynchronizedLists to store the Orders and the burgers that have been extracted from the buffer.
+### I synchronized the shared variables by...
+- Using the volatile keyword when defining the buffer
+- Making the buffer a BlockingQueue
+- Using AtomicBooleans for the burger states (cooked/delivered/inBuffer)
+- Using SynchronizedLists to store the Orders and the burgers that have been extracted from the buffer.
