@@ -24,17 +24,21 @@ public class App
 	// volatile prevents memory consistency errors
 	// the queue in this case will always be read from the main memory
 	private static volatile BlockingQueue<AtomicBurger> buffer = new ArrayBlockingQueue<AtomicBurger>(5);
-
-	private static volatile List<AtomicBurger> orders = new ArrayList<AtomicBurger>();
-	private static volatile List<AtomicBurger> cookedBurgers = new ArrayList<AtomicBurger>();
-	private static volatile Producer producer = new Producer();
-	private static volatile Consumer consumer = new Consumer();
+//	private static volatile Producer producer = new Producer();
+//	private static volatile Consumer consumer = new Consumer();
 	
 	
     public static void main( String[] args ) throws InterruptedException
     {
     	System.out.println("Inside : " + Thread.currentThread().getName());
     	// Sets up a blocking queue of max capacity 5! :D 
+    	List<AtomicBurger> orders = new ArrayList<AtomicBurger>();
+    	List<AtomicBurger> cookedBurgers = new ArrayList<AtomicBurger>();
+    	
+    	Producer producer = new Producer();
+    	Consumer consumer = new Consumer();
+    	
+    	
     	AtomicBurger burger1 = new AtomicBurger(1);
     	AtomicBurger burger2 = new AtomicBurger(2);
     	AtomicBurger burger3 = new AtomicBurger(3);
@@ -49,15 +53,11 @@ public class App
     	List<AtomicBurger> synlist = Collections.synchronizedList(orders);
     	
     	List<AtomicBurger> cookedSynlist = Collections.synchronizedList(cookedBurgers);
-    
-    	
-//        System.out.println("BurgerID: "+ burger1.burgerId);
-    	
-        
      
         
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
         
+        // Anonymous Runnable defined using a lambda 
         Runnable task1 = () -> {
         	System.out.println("Task 1 Inside : " + Thread.currentThread().getName());
         	for (AtomicBurger b:synlist) {
