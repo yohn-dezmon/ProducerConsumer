@@ -129,9 +129,10 @@ public class App
          
          executorService.scheduleAtFixedRate(task5, 0, 10, TimeUnit.SECONDS);
         
-         // this doesn't work like I'd like it to...
-         executorService.shutdown();
+         // This waits one minute to shut down the executor service! 
          executorService.awaitTermination(1, TimeUnit.MINUTES);
+         executorService.shutdown();
+         
          
          
         
