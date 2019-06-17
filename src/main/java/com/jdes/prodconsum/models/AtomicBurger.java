@@ -25,7 +25,7 @@ public class AtomicBurger {
 		return cooked.get();
 	}
 	
-	public synchronized void setCooked() {
+	public void setCooked() {
 		cooked.compareAndSet(false, true);
 	}
 	
@@ -33,7 +33,7 @@ public class AtomicBurger {
 		return delivered.get();
 	}
 	
-	public synchronized void setDelivered() {
+	public void setDelivered() {
 		delivered.compareAndSet(false, true);
 	}
 	
@@ -41,7 +41,7 @@ public class AtomicBurger {
 		return inBuffer.get();
 	}
 	
-	public synchronized void setInBuffer() {
+	public void setInBuffer() {
 		inBuffer.compareAndSet(false, true);
 	}
 	
